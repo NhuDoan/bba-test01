@@ -289,4 +289,176 @@
                 // 2
                 // -1
             ```
-                
+    - Array util 
+        - map: Creates a new array by applying a function to each element of the original array. Returns a new array of the same length.
+             
+             ```javascript
+               // map
+                const number = [1, 2, 3, 4, 5];
+                const doubled = number.map((num) => num * 2);
+                console.log(number); // [ 1, 2, 3, 4, 5 ]
+                console.log(doubled); // [ 2, 4, 6, 8, 10 ]
+
+
+                const students = ["An", "Bình", "Cường"];
+                const studentList = students.map((name, index) => ({
+                id: index + 1,
+                name: name,
+                code: `SV00${index + 1}`,
+                }));
+                console.log(studentList);
+                // [
+                //  { id: 1, name: 'An', code: 'SV001' },
+                //  { id: 2, name: 'Bình', code: 'SV002' },
+                //  { id: 3, name: 'Cường', code: 'SV003' }
+                // ]
+            ```
+        - filter: Creates a new array containing only elements that satisfy the condition in the callback function. Returns the filtered array.
+             
+             ```javascript
+                const numbers = [1, 2, 3, 4, 5, 6, 7];
+                const evenNumbers = numbers.filter((num) => num % 2 === 0);
+                console.log(evenNumbers); // [ 2, 4, 6 ]
+                console.log(numbers); // [ 1, 2, 3, 4, 5, 6, 7 ]
+            ```
+        - find: Finds and returns the first element in the array that satisfies the condition. Returns undefined if not found.
+
+             ```javascript
+                // find
+                const numbers1 = [1, 5, 3, 8, 2, 10, 7];
+                // tìm số chẵn đầu tiên
+                const firstEven = numbers1.find((num) => num % 2 === 0);
+                console.log(firstEven);
+                // tìm số lớn hơn 6
+                const greater6 = numbers1.find((num) => num > 6);
+                console.log(greater6);
+                // không tìm thấy
+                const negative = numbers1.find((num) => num < 0);
+                console.log(negative);
+            ```
+        - reduce: Iterates through the array and accumulates the elements into a single value (number, string, object, etc.) based on the callback function.
+
+            ```javascript
+                // reduce
+                const numbers2 = [1, 2, 3, 4, 5];
+                const sum = numbers2.reduce((accumulator, current) => {
+                console.log(`accumlator: ${accumulator}, current: ${current}`);
+                return accumulator + current;
+                }, 0);
+                console.log(sum); // 15
+                // giải thích
+                // accumulator: 0, current: 1 -> return 1
+                // accumulator: 1, current: 2 -> return 3
+            ```
+        - some: Checks if at least one element in the array satisfies the condition. Returns true/false.
+
+            ```javascript
+                // some
+                const numbersSome = [1, 2, 5, 98, 10];
+                // kiểm tra có số chẵn hay không
+                const hasEven = numbersSome.some((num) => num % 2 === 0);
+                console.log(hasEven); // true
+                // kiểm tra có số > 10 khoonh
+                const hasGreater10 = numbersSome.some((num) => num > 10);
+                console.log(hasGreater10);
+                // Dừng ngay khi tìm thấy
+                const hasEvenWithLog = numbersSome.some(num=> {
+                console.log(`Checking: ${num}`);
+                return num % 2 === 0;
+                });
+            ```
+        - every: Checks whether all elements in the array satisfy the condition. Returns true/false.
+
+            ```javascript
+                // every
+                const numberEvery = [2, 4, 8, 10];
+                // kiểm tra tất cả là số chẵn
+                const allEven = numberEvery.every((num) => num % 2 === 0);
+                console.log(allEven); // true
+                // kiểm tra tất cả > 0
+                const allPositive = numberEvery.every((num) => num > 0);
+                console.log(allPositive); // true
+                // kiểm tra tất cả > 5
+                const allGreater5 = numberEvery.every((num) => num > 5);
+                console.log(allGreater5);
+                // dừng ngay khi gặp false
+                const checkWithLogEvery = numberEvery.every((num) => {
+                console.log(`Checking: ${num}`);
+                return num < 5;
+                }); // checking 2, 4, 8
+                console.log(checkWithLogEvery); // false
+            ```
+        - sort: sort: Sorts the elements in the array in order (default is alphabetical/ascending). Modifies the original array.
+
+            ```javascript
+                // sort
+                const fruits = ['banana', 'apple', 'orange', 'grape'];
+                fruits.sort();
+                console.log(fruits); // ['apple', 'banana', 'grape', 'orange']
+            ```
+            - Common bug: sort is NOT correct by default → Use compare function.
+            - Compare function returns:
+
+                - Negative number: a comes before b
+                - 0: Keep the position unchanged
+                - Positive number: b comes before a
+
+            ```javascript
+            const numbersSort = [10, 5, 40, 25, 1000, 1];
+            numbersSort.sort();
+            console.log(numbersSort); 
+            // [1, 10, 1000, 25, 40, 5] 
+            // sai bởi vì sort mặc định chuyển thành string "10" < "5"
+
+            const numbersSort = [10, 5, 40, 25, 1000, 1];
+            numbersSort.sort((a,b) => a - b); // tăng dần
+            console.log(numbersSort);
+            // [1, 5, 10, 25, 40, 1000] đúng
+
+            const numbersSort = [10, 5, 40, 25, 1000, 1];
+            numbersSort.sort((a,b) => b - a); // giảm dần
+            console.log(numbersSort);
+            // [1000, 40, 25, 10, 5, 1]
+            ```
+        - push: Adds one or more elements to the end of the array. Modifies the original array and returns the new length.
+
+            ```javascript
+            // push
+            const fruitsPush = [ 'apple', 'banana'];
+            const newLength = fruitsPush.push ('orange');
+            console.log(fruitsPush); // [ 'apple', 'banana', 'orange' ]
+            console.log(newLength); // 3
+            // push nhiều phần tử cùng lúc
+            fruitsPush.push('grape', 'mango');
+            console.log(fruitsPush); // [ 'apple', 'banana', 'orange', 'grape', 'mango' ]
+            ``` 
+        - pop: Removes and returns the last element of the array. Modifies the original array and decreases its length. Pop an empty array returns undefined.
+
+            ```javascript
+            // pop
+            const fruitsPop = [ 'apple', 'banana', 'orange', 'grape'];
+            const lastFruit = fruitsPop.pop();
+            console.log(lastFruit);
+            console.log(fruitsPop); // [ 'apple', 'banana', 'orange']
+            ```
+        - shift: Removes and returns the first element of the array. Modifies the original array and reduces its length. Shifting an empty array returns undefined.
+
+            ```javascript
+            // shift
+            const fruitsShift = [ 'apple', 'banana', 'orange', 'grape'];
+            const firstFruit = fruitsShift.shift();
+            console.log(firstFruit);
+            console.log(fruitsShift); // [ 'banana', 'orange',  'grape']
+            ```
+        - unshift: Adds one or more elements to the beginning of the array. Modifies the original array and returns the new length of the array.
+
+            ```javascript
+            // unshift
+            const fruitsUnshift = [ 'banana', 'orange'];
+            const newLength1 = fruitsUnshift.unshift ('apple');
+            console.log(fruitsUnshift); // [ 'apple', 'banana', 'orange' ]
+            console.log(newLength1); // 3
+            // unshift nhiều phần tử cùng lúc
+            fruitsUnshift.unshift('grape', 'mango');
+            console.log(fruitsUnshift); // [ 'grape', 'mango', 'apple', 'banana', 'orange' ]
+            ```
